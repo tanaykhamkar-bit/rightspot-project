@@ -1,0 +1,24 @@
+<!-- admin.html -->
+<!DOCTYPE html><html lang="en">
+<head><meta charset="utf-8"/><title>Admin - RightSpot</title><link rel="stylesheet" href="style.css"><script type="module" src="admin-add.js" defer></script></head>
+<body>
+  <header class="site-header">
+    <div class="brand"><div class="logo">RS</div><h1>RightSpot - Admin</h1></div>
+    <nav class="nav-right"><a href="index.html">Home</a></nav>
+  </header>
+
+  <main style="max-width:900px;margin:24px auto;padding:0 16px;">
+    <div class="card">
+      <h3>Admin Dashboard</h3>
+      <div style="display:flex;gap:12px;margin-top:12px;">
+        <button onclick="location.href='add-pg.html'">Add PGs</button>
+        <button onclick="location.href='add-pg.html?type=Hostel'">Add Hostels</button>
+        <button onclick="location.href='admin-bookings.html'">Bookings</button>
+        <button onclick="location.href='admin-accounts.html'">Accounts</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">Admin - RightSpot</footer>
+</body>
+</html>

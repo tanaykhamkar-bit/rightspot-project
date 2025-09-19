@@ -1,0 +1,69 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>RightSpot — Find PGs & Hostels</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="index.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <div class="logo">RS</div>
+      <h1>RightSpot</h1>
+    </div>
+    <nav class="nav-right">
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <button id="profileBtn" disabled>Profile</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="title">RightSpot</div>
+    <div class="subtitle">pg’s , hostels and private rentals.</div>
+
+    <div class="search-panel card">
+      <input id="searchInput" placeholder="Search PGs or hostels by name or location...">
+      <button id="searchBtn">Search</button>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="left-col">
+      <div class="card blog">
+        <h4>Real Solutions, Real Fast!</h4>
+        <h2>Managing unanticipated or planned residency issues on tip of your finger.</h2>
+        <p>In today’s fast-growing cities, finding suitable and affordable housing remains a critical challenge for students, bachelors, and even working citizens. The primary issues include limited availability of rental properties, skyrocketing prices, strict landlord restrictions (e.g., “no bachelors” policies), and inflexible lease terms. For students and young professionals, the lack of co-living options or hostel-style accommodations often forces them into substandard or overpriced units. Meanwhile, regular citizens face hurdles such as lengthy documentation, low housing stock in prime areas, and poor maintenance standards.<br><br>Will help you find the RightSpot for your needs and demand.</p>
+        <div class="btn-choices">
+          <button id="btnPG">Locate Near Me - PG</button>
+          <button id="btnHostel">Locate Near Me - Hostel</button>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;" id="searchResults" class="card">
+        <!-- Search results populate here -->
+      </div>
+
+    </div>
+
+    <aside class="right-col">
+      <div class="card" style="width:100%; text-align:center;">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161ee3b31?q=80&w=1200&auto=format&fit=crop&s=5c9815f7b7b4f8d3d2da09d196c9b0a4" style="max-width:100%; border-radius:10px;">
+      </div>
+    </aside>
+  </main>
+
+  <div class="profile-popup" id="profilePopup">
+    <h4 id="profileName">Guest</h4>
+    <button id="myBookingsBtn">Bookings</button>
+    <button id="settingsBtn">Settings</button>
+    <button id="logoutBtn" style="background:var(--red); color:white;">Logout</button>
+  </div>
+
+  <footer class="footer">
+    © 2025 RightSpot. All rights reserved. | Contact: rightspot@gmail.com | Insta: @rightspot_dev
+  </footer>
+</body>
+</html>

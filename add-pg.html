@@ -1,0 +1,40 @@
+<!-- add-pg.html -->
+<!DOCTYPE html><html lang="en">
+<head><meta charset="utf-8"/><title>Add PG/Hostel - Admin</title><link rel="stylesheet" href="style.css"><script type="module" src="admin-add.js" defer></script></head>
+<body>
+  <header class="site-header"><div class="brand"><div class="logo">RS</div><h1>RightSpot - Admin</h1></div></header>
+
+  <main style="max-width:800px;margin:24px auto;padding:0 16px;">
+    <div class="card">
+      <h3 id="pageTitle">Add PG</h3>
+
+      <div style="margin-top:12px;">
+        <button id="addMarkerBtn">Add Marker (enter coordinates)</button>
+        <div id="coordBox" style="display:none; margin-top:8px;">
+          <input id="lat" placeholder="latitude (e.g. 19.24)" style="width:49%; padding:8px;">
+          <input id="lng" placeholder="longitude (e.g. 73.13)" style="width:49%; padding:8px;">
+        </div>
+      </div>
+
+      <div style="margin-top:18px;">
+        <button id="addDetailBtn">Add Detail Page (enter file/slug)</button>
+        <div id="detailBox" style="display:none; margin-top:8px;">
+          <input id="title" placeholder="Title (e.g. Shivaji PG)" style="width:100%; padding:8px; margin-bottom:8px;">
+          <input id="address" placeholder="Address" style="width:100%; padding:8px; margin-bottom:8px;">
+          <input id="price" placeholder="Price per month" style="width:100%; padding:8px; margin-bottom:8px;">
+          <input id="slug" placeholder="Detail page slug (unique short id, e.g. shivaji-pg)" style="width:100%; padding:8px; margin-bottom:8px;">
+          <textarea id="description" placeholder="Description" style="width:100%; height:120px; padding:8px;"></textarea>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <button id="addPGFinalBtn" class="cta">Add PG to Map</button>
+      </div>
+
+      <div id="message" style="margin-top:10px;color:green;"></div>
+    </div>
+  </main>
+
+  <footer class="footer">Admin - RightSpot</footer>
+</body>
+</html>
