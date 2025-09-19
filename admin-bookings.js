@@ -1,55 +1,58 @@
 // admin-bookings.js
-import { auth, db } from "./firebase.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import { collection, getDocs, doc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import { db } from "./firebase.js";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
+const bookingsList = document.getElementById("bookingsList");
+
+// Load all bookings
 async function loadBookings() {
-  const snap = await getDocs(query(collection(db, 'bookings'), orderBy('createdAt', 'desc')));
-  const out = document.getElementById('bookingsList');
-  out.innerHTML = '';
-  snap.forEach(d => {
-    const data = d.data();
-    const row = document.createElement('div');
-    row.className = 'listing-card';
-    row.innerHTML = `
-      <div class="meta"><strong>${data.userName}</strong><div>${data.userId}</div></div>
-      <div>
-        <div>${data.listingTitle}</div>
-        <div style="margin-top:6px;">
-          <button class="lockBtn">Lock</button>
-        </div>
-      </div>
+  bookingsList.innerHTML = "<p>Loading bookings...</p>";
+
+  const snap = await getDocs(collection(db, "bookings"));
+  bookingsList.innerHTML = "";
+
+  for (const docSnap of snap.docs) {
+    const data = docSnap.data();
+
+    // Find the PG/Hostel ad
+    const adRef = doc(db, "pgs", data.adId); // 🔹 for now only PGs
+    const adSnap = await getDoc(adRef);
+
+    let locked = false;
+    if (adSnap.exists()) {
+      locked = adSnap.data().locked === true;
+    }
+
+    const lockBtnText = locked ? "Unlock" : "Lock";
+
+    const div = document.createElement("div");
+    div.className = "booking-card";
+    div.innerHTML = `
+      <p><b>User:</b> ${data.username} booked <b>${data.adName}</b></p>
+      <button onclick="toggleLock('${data.adId}', ${locked})">${lockBtnText}</button>
     `;
-    const lockBtn = row.querySelector('.lockBtn');
-    lockBtn.addEventListener('click', async () => {
-      // lock the listing in 'pgs'
-      try {
-        const listingRef = doc(db, 'pgs', data.listingId);
-        await updateDoc(listingRef, { locked: true });
-        // set booking status to confirmed
-        const bookingRef = doc(db, 'bookings', d.id);
-        await updateDoc(bookingRef, { status: 'confirmed' });
-        alert('Listing locked and booking confirmed.');
-        loadBookings();
-      } catch (err) {
-        alert('Error: ' + err.message);
-      }
-    });
-    out.appendChild(row);
-  });
+    bookingsList.appendChild(div);
+  }
 }
 
-// simple admin gate (you must set isAdmin=true in Firestore users doc)
-onAuthStateChanged(auth, async user => {
-  if (!user) { alert('Please login'); location.href='login.html'; return; }
-  // verify isAdmin
-  const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
-  const uRef = doc(db, 'users', user.uid);
-  const uSnap = await getDoc(uRef);
-  if (!uSnap.exists() || !uSnap.data().isAdmin) {
-    alert('You are not an admin. Contact owner.');
-    location.href = 'index.html';
-    return;
+// Toggle Lock / Unlock
+window.toggleLock = async function (adId, currentlyLocked) {
+  try {
+    const adRef = doc(db, "pgs", adId);
+    await updateDoc(adRef, { locked: !currentlyLocked });
+    alert(`Ad is now ${currentlyLocked ? "Unlocked ✅" : "Locked 🔒"}`);
+    loadBookings(); // refresh list
+  } catch (err) {
+    console.error(err);
+    alert("Error updating lock status: " + err.message);
   }
-  loadBookings();
-});
+};
+
+// Initial load
+loadBookings();
