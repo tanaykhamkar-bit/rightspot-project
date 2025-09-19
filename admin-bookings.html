@@ -1,16 +1,28 @@
-<!-- admin-bookings.html -->
-<!DOCTYPE html><html lang="en">
-<head><meta charset="utf-8"/><title>Admin Bookings - RightSpot</title><link rel="stylesheet" href="style.css"><script type="module" src="admin-bookings.js" defer></script></head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Bookings | RightSpot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
-  <header class="site-header"><div class="brand"><div class="logo">RS</div><h1>RightSpot - Admin</h1></div></header>
-
-  <main style="max-width:900px;margin:24px auto;padding:0 16px;">
-    <div class="card">
-      <h3>Bookings</h3>
-      <div id="bookingsList"></div>
+  <header class="site-header">
+    <div class="brand">
+      <div class="logo">RS</div>
+      <h1>RightSpot</h1>
     </div>
+    <nav class="nav-right">
+      <a href="admin.html">Dashboard</a>
+    </nav>
+  </header>
+
+  <main style="max-width:1100px;margin:20px auto;padding:0 16px;">
+    <h2>Bookings Management</h2>
+    <div id="bookingsList" class="card"></div>
   </main>
 
-  <footer class="footer">Admin - RightSpot</footer>
+  <footer class="footer">© 2025 RightSpot. All rights reserved.</footer>
+
+  <script type="module" src="admin-bookings.js"></script>
 </body>
 </html>
