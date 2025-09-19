@@ -20,8 +20,10 @@ async function loadBookings() {
   for (const docSnap of snap.docs) {
     const data = docSnap.data();
 
-    // Find the PG/Hostel ad
-    const adRef = doc(db, "pgs", data.adId); // 🔹 for now only PGs
+    // ✅ use pgId instead of adId
+    if (!data.pgId) continue;
+
+    const adRef = doc(db, "pgs", data.pgId);
     const adSnap = await getDoc(adRef);
 
     let locked = false;
@@ -34,17 +36,17 @@ async function loadBookings() {
     const div = document.createElement("div");
     div.className = "booking-card";
     div.innerHTML = `
-      <p><b>User:</b> ${data.username} booked <b>${data.adName}</b></p>
-      <button onclick="toggleLock('${data.adId}', ${locked})">${lockBtnText}</button>
+      <p><b>User:</b> ${data.username} booked <b>${data.pgName || "Unnamed PG"}</b></p>
+      <button onclick="toggleLock('${data.pgId}', ${locked})">${lockBtnText}</button>
     `;
     bookingsList.appendChild(div);
   }
 }
 
 // Toggle Lock / Unlock
-window.toggleLock = async function (adId, currentlyLocked) {
+window.toggleLock = async function (pgId, currentlyLocked) {
   try {
-    const adRef = doc(db, "pgs", adId);
+    const adRef = doc(db, "pgs", pgId);
     await updateDoc(adRef, { locked: !currentlyLocked });
     alert(`Ad is now ${currentlyLocked ? "Unlocked ✅" : "Locked 🔒"}`);
     loadBookings(); // refresh list
@@ -56,3 +58,4 @@ window.toggleLock = async function (adId, currentlyLocked) {
 
 // Initial load
 loadBookings();
+
