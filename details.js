@@ -55,35 +55,35 @@ onAuthStateChanged(auth, (user) => {
   // nothing special here for display; Confirm Booking checks auth at press time
 });
 
-document.getElementById("confirmBookingBtn").addEventListener("click", async () => {
-  const user = auth.currentUser;
-  if (!user) {
-    alert("Please login to book");
-    window.location = "login.html";
-    return;
-  }
-  if (!listingDoc) {
-    alert("Listing not loaded");
-    return;
-  }
+document
+  .getElementById("confirmBookingBtn")
+  .addEventListener("click", async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Please login to book");
+      window.location = "login.html";
+      return;
+    }
+    if (!listingDoc) {
+      alert("Listing not loaded");
+      return;
+    }
 
-  try {
-    // ✅ save booking with pgId and pgName (matching admin-bookings.js)
-    await addDoc(collection(db, "bookings"), {
-      pgId: listingDoc.id,
-      pgName: listingDoc.title,
-      userId: user.uid,
-      username: user.email ? user.email.split("@")[0] : "user",
-      status: "requested",
-      createdAt: serverTimestamp(),
-    });
-
-    alert("Booking requested. Admin will review and lock if confirmed.");
-    window.location = "index.html";
-  } catch (err) {
-    alert("Error: " + err.message);
-  }
-});
+    try {
+      await addDoc(collection(db, "bookings"), {
+        pgId: listingDoc.id, // 🔹 consistent with admin-bookings.js
+        pgName: listingDoc.title, // 🔹 consistent with admin-bookings.js
+        username: user.email ? user.email.split("@")[0] : "user",
+        userId: user.uid,
+        status: "requested",
+        createdAt: serverTimestamp()
+      });
+      alert("Booking requested. Admin will review and lock if confirmed.");
+      window.location = "index.html";
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  });
 
 loadListing();
 
