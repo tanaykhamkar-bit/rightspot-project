@@ -30,3 +30,4 @@ loginForm.addEventListener("submit", async (e) => {
     alert("Login failed: " + error.message);
   }
 });
+
